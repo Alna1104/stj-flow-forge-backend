@@ -1,4 +1,4 @@
-import workOrderRoutes from './routes/workOrder.routes.js';
+import workOrderRoutes from './routes/workorders.js';
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(express.json());
-//app.use('/workorders', workOrderRoutes);
+app.use('/workorders', workOrderRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
@@ -18,8 +18,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch((err) => console.error(err));
 
 // Define routes
-const workOrderRoutes = require('./routes/workorders');
-app.use('/api/workorders', workOrderRoutes);
+// const workOrderRoutes = require('./routes/workorders');
+// app.use('/api/workorders', workOrderRoutes);
 
 app.get('/', (req, res) => {
   res.send('STJ Flow Forge Backend Running');
