@@ -1,5 +1,6 @@
 
 {
+  "type": :"module",
   "name": "stj-flow-forge-backend",
   "version": "1.0.0",
   "main": "server.js",
