@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import workOrderRoutes from './routes/workorders.js';
+import companyRoutes from './routes/companies.js';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/workorders', workOrderRoutes);
+app.use('/api/companies', companyRoutes);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
