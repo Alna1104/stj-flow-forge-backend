@@ -28,8 +28,13 @@ const upload = multer({ storage });
 // POST /api/workorders
 router.post('/', upload.array('files'), async (req, res) => {
   try {
+    
+    console.log('📥 Request Body (data):', req.body.data); // should be JSON string
+    console.log('📁 Uploaded Files:', req.files);
+    
     const workOrderData = JSON.parse(req.body.data);
-
+    console.log('🛠️ Parsed WorkOrder Data:', workOrderData);
+   
     // Attach uploaded file names to the work order
     const fileNames = req.files.map(file => file.filename);
     workOrderData.files = fileNames;
