@@ -25,6 +25,17 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+// GET all work orders
+router.get('/', async (req, res) => {
+  try {
+    const workOrders = await WorkOrder.find().sort({ createdAt: -1 }); // latest first
+    res.json(workOrders);
+  } catch (error) {
+    console.error('Error fetching work orders:', error);
+    res.status(500).json({ message: 'Failed to fetch work orders' });
+  }
+});
+
 // POST /api/workorders
 router.post('/', upload.array('files'), async (req, res) => {
   try {
