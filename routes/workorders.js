@@ -71,5 +71,24 @@ router.post('/', upload.array('files'), async (req, res) => {
     res.status(500).json({ error: 'Failed to create work order' });
   }
 });
+// Update status of a work order
+router.put('/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, quotationStatus } = req.body;
+
+    const updated = await WorkOrder.findByIdAndUpdate(
+      id,
+      { ...(status && { status }), ...(quotationStatus && { quotationStatus }) },
+      { new: true }
+    );
+
+    res.json(updated);
+  } catch (error) {
+    console.error('Failed to update status:', error);
+    res.status(500).json({ error: 'Failed to update status' });
+  }
+});
+
 
 export default router;
