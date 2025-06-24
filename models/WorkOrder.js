@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const workOrderSchema = new mongoose.Schema({
-  workOrderNumber: { type: String, required: true },
+  workOrderNumber: { type: String, required: true, unique: true },
   date: { type: String, required: true },
   company: { type: String, required: true },
   contactPerson: { type: String, required: true },
