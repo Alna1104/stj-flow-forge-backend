@@ -45,7 +45,19 @@ router.post('/', upload.array('files'), async (req, res) => {
     
     const workOrderData = JSON.parse(req.body.data);
     console.log('🛠️ Parsed WorkOrder Data:', workOrderData);
-   
+    const latestWorkOrder = await WorkOrder.findOne().sort({ createdAt: -1 });
+    let nextNumber = 1;
+    const currentYear = new Date().getFullYear();
+
+    if (latestWorkOrder && latestWorkOrder.workOrderNumber) {
+      const match = latestWorkOrder.workOrderNumber.match(/WO-(\d{4})-(\d+)/);
+      if (match && parseInt(match[1]) === currentYear) {
+        nextNumber = parseInt(match[2]) + 1;
+      }
+    }
+    const workOrderNumber = `WO-${currentYear}-${nextNumber.toString().padStart(4, '0')}`;
+    workOrderData.workOrderNumber = workOrderNumber;
+    
     // Attach uploaded file names to the work order
     const fileNames = req.files.map(file => file.filename);
     workOrderData.files = fileNames;
